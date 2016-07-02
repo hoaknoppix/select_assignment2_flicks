@@ -1,0 +1,6 @@
+framework module Pods_select_assignment2_flicksUITests {
+  umbrella header "Pods-select_assignment2_flicksUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
