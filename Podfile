@@ -8,6 +8,14 @@ target 'select_assignment2_flicks' do
   # Pods for select_assignment2_flicks
   
   pod 'Alamofire', '~> 3.4'
+  
+  pod 'AFNetworking', '~> 3.0'
+  
+  pod 'SwiftyJSON'
+  
+  pod 'JTProgressHUD'
+  
+  pod 'ReachabilitySwift'
 
   target 'select_assignment2_flicksTests' do
     inherit! :search_paths
