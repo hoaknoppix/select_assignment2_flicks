@@ -17,6 +17,11 @@
 		FF05D34F1D279E2500DFE526 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF05D34D1D279E2500DFE526 /* LaunchScreen.storyboard */; };
 		FF05D35A1D279E2500DFE526 /* select_assignment2_flicksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF05D3591D279E2500DFE526 /* select_assignment2_flicksTests.swift */; };
 		FF05D3651D279E2500DFE526 /* select_assignment2_flicksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF05D3641D279E2500DFE526 /* select_assignment2_flicksUITests.swift */; };
+		FFD0E1E01D28ACF500DDD3EC /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD0E1DF1D28ACF500DDD3EC /* Movie.swift */; };
+		FFD0E1E31D28B32800DDD3EC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD0E1E21D28B32800DDD3EC /* Constants.swift */; };
+		FFD0E1E51D28BD5300DDD3EC /* MovieList.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD0E1E41D28BD5300DDD3EC /* MovieList.swift */; };
+		FFD5865B1D28CB9600D22A7F /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5865A1D28CB9600D22A7F /* MovieCell.swift */; };
+		FFD586601D29136000D22A7F /* ViewDetailsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5865F1D29136000D22A7F /* ViewDetailsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +64,12 @@
 		FF05D3601D279E2500DFE526 /* select_assignment2_flicksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = select_assignment2_flicksUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF05D3641D279E2500DFE526 /* select_assignment2_flicksUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = select_assignment2_flicksUITests.swift; sourceTree = "<group>"; };
 		FF05D3661D279E2500DFE526 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FFD0E1DF1D28ACF500DDD3EC /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Movie.swift; path = select_assignment2_flicks/Model/Movie.swift; sourceTree = "<group>"; };
+		FFD0E1E21D28B32800DDD3EC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = select_assignment2_flicks/Model/Constants.swift; sourceTree = "<group>"; };
+		FFD0E1E41D28BD5300DDD3EC /* MovieList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieList.swift; path = select_assignment2_flicks/Model/MovieList.swift; sourceTree = "<group>"; };
+		FFD5865A1D28CB9600D22A7F /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCell.swift; path = select_assignment2_flicks/UIModels/UICells/MovieCell.swift; sourceTree = "<group>"; };
+		FFD5865C1D28D3E400D22A7F /* select_assignment2_flicks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "select_assignment2_flicks-Bridging-Header.h"; sourceTree = "<group>"; };
+		FFD5865F1D29136000D22A7F /* ViewDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDetailsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,12 +126,15 @@
 		FF05D3381D279E2400DFE526 = {
 			isa = PBXGroup;
 			children = (
+				FFD0E1E11D28AD0900DDD3EC /* Models */,
+				FFD0E1DD1D2894E700DDD3EC /* UIModels */,
 				FF05D3431D279E2500DFE526 /* select_assignment2_flicks */,
 				FF05D3581D279E2500DFE526 /* select_assignment2_flicksTests */,
 				FF05D3631D279E2500DFE526 /* select_assignment2_flicksUITests */,
 				FF05D3421D279E2400DFE526 /* Products */,
 				14BB2289DF7B8C35C0F55A75 /* Pods */,
 				CB25512CB41B757F38F3039B /* Frameworks */,
+				FFD5865C1D28D3E400D22A7F /* select_assignment2_flicks-Bridging-Header.h */,
 			);
 			sourceTree = "<group>";
 		};
@@ -143,6 +157,7 @@
 				FF05D34B1D279E2500DFE526 /* Assets.xcassets */,
 				FF05D34D1D279E2500DFE526 /* LaunchScreen.storyboard */,
 				FF05D3501D279E2500DFE526 /* Info.plist */,
+				FFD5865F1D29136000D22A7F /* ViewDetailsController.swift */,
 			);
 			path = select_assignment2_flicks;
 			sourceTree = "<group>";
@@ -163,6 +178,32 @@
 				FF05D3661D279E2500DFE526 /* Info.plist */,
 			);
 			path = select_assignment2_flicksUITests;
+			sourceTree = "<group>";
+		};
+		FFD0E1DD1D2894E700DDD3EC /* UIModels */ = {
+			isa = PBXGroup;
+			children = (
+				FFD0E1DE1D2894F000DDD3EC /* UICells */,
+			);
+			name = UIModels;
+			sourceTree = "<group>";
+		};
+		FFD0E1DE1D2894F000DDD3EC /* UICells */ = {
+			isa = PBXGroup;
+			children = (
+				FFD5865A1D28CB9600D22A7F /* MovieCell.swift */,
+			);
+			name = UICells;
+			sourceTree = "<group>";
+		};
+		FFD0E1E11D28AD0900DDD3EC /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				FFD0E1DF1D28ACF500DDD3EC /* Movie.swift */,
+				FFD0E1E21D28B32800DDD3EC /* Constants.swift */,
+				FFD0E1E41D28BD5300DDD3EC /* MovieList.swift */,
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -427,8 +468,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFD0E1E51D28BD5300DDD3EC /* MovieList.swift in Sources */,
+				FFD0E1E31D28B32800DDD3EC /* Constants.swift in Sources */,
+				FFD5865B1D28CB9600D22A7F /* MovieCell.swift in Sources */,
 				FF05D3471D279E2500DFE526 /* ViewController.swift in Sources */,
+				FFD586601D29136000D22A7F /* ViewDetailsController.swift in Sources */,
 				FF05D3451D279E2500DFE526 /* AppDelegate.swift in Sources */,
+				FFD0E1E01D28ACF500DDD3EC /* Movie.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -573,10 +619,13 @@
 			baseConfigurationReference = 5C7311E710A0A704A734E05C /* Pods-select_assignment2_flicks.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = select_assignment2_flicks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noron.select-assignment2-flicks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "select_assignment2_flicks-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -585,10 +634,12 @@
 			baseConfigurationReference = E9BCAA9384E9CC6C6F33EFAD /* Pods-select_assignment2_flicks.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = select_assignment2_flicks/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.noron.select-assignment2-flicks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "select_assignment2_flicks-Bridging-Header.h";
 			};
 			name = Release;
 		};
