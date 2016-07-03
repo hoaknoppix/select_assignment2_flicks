@@ -34,6 +34,8 @@ class ViewController: UIViewController {
         movieList.fetchDataNowPlaying(1)
         tableView.delegate = self
         tableView.dataSource = self
+        self.errorView.hidden = getConnectionStatus()
+
     }
 
     override func didReceiveMemoryWarning() {
