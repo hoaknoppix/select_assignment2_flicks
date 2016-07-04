@@ -26,6 +26,7 @@ The following **optional** features are implemented:
 The following **additional** features are implemented:
 
 - [x] Using gcd and after a while I wonder it's over-engineering.
+- [x] Paging, scroll to bottom to the next page, scroll to the top to go back.
 
 ## Video Walkthrough
 
