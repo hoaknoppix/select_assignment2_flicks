@@ -32,6 +32,8 @@ class ViewController: UIViewController {
     
     var viewMode: ViewMode = .NowPlaying
     
+    let searchBar = UISearchBar()
+    
     enum ViewMode {
         case NowPlaying, TopRated
     }
@@ -69,6 +71,8 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationItem.titleView = searchBar
+        
         setDisplayMode(.List)
         switch (viewMode) {
         case .NowPlaying:
