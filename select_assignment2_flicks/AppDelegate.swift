@@ -16,6 +16,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        createTabs()
+        setUpTheme()
         return true
     }
 
@@ -39,6 +41,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func createTabs() {
+        
+        let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
+        
+        let nowPlayingNavigationViewController = storyboard.instantiateViewControllerWithIdentifier("navigationViewController") as! UINavigationController
+        nowPlayingNavigationViewController.tabBarItem.title = "Now Playing"
+        nowPlayingNavigationViewController.tabBarItem.image = UIImage(named: "nowPlaying")
+        let nowPlayingViewController = nowPlayingNavigationViewController.viewControllers[0] as! ViewController
+        nowPlayingViewController.viewMode = .NowPlaying
+        
+        let topRatedNavigationViewController = storyboard.instantiateViewControllerWithIdentifier("navigationViewController") as! UINavigationController
+        topRatedNavigationViewController.tabBarItem.title = "Top Rated"
+        topRatedNavigationViewController.tabBarItem.image = UIImage(named: "topRated")
+        let topRatedViewController = topRatedNavigationViewController.viewControllers[0] as! ViewController
+        topRatedViewController.viewMode = .TopRated
+        
+        let tabBarController = UITabBarController()
+        tabBarController.viewControllers = [nowPlayingNavigationViewController, topRatedNavigationViewController]
+        
+        window?.rootViewController = tabBarController
+        
+        window?.makeKeyAndVisible()
+    }
+    
+    func setUpTheme() {
+        let navigationBarAppearance = UINavigationBar.appearance()
+        navigationBarAppearance.barStyle = .Black
+        navigationBarAppearance.barTintColor = UIColor.redColor()
+        navigationBarAppearance.tintColor = UIColor.whiteColor()
+        navigationBarAppearance.titleTextAttributes = [NSForegroundColorAttributeName : UIColor.whiteColor()]
+        
+        let tabBarAppearance = UITabBar.appearance()
+        tabBarAppearance.barTintColor = UIColor.redColor()
+        tabBarAppearance.tintColor = UIColor.whiteColor()
     }
 
 

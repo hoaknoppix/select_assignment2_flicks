@@ -9,10 +9,9 @@
 import UIKit
 import SwiftyJSON
 
-class Movie: NSObject {
+struct Movie {
     
     init(json: JSON) {
-        super.init()
         self.title = json["title"].stringValue
         self.imageUrl = json["poster_path"].stringValue
         self.voteAverage = json["vote_average"].doubleValue
@@ -34,15 +33,15 @@ class Movie: NSObject {
     
     
     var lowResImageUrl: String {
-        get {
-            return Constants.LOW_RES_IMAGE_ENDPOINT + self.imageUrl
-        }
+        return Constants.LOW_RES_IMAGE_ENDPOINT + self.imageUrl
+    }
+    
+    var mediumResImageUrl: String {
+        return Constants.MEDIUM_RES_IMAGE_ENDPOINT + self.imageUrl
     }
     
     var highResImageUrl: String {
-        get {
-            return Constants.HIGH_RES_IMAGE_ENDPOINT + self.imageUrl
-        }
+        return Constants.HIGH_RES_IMAGE_ENDPOINT + self.imageUrl
     }
     
 }

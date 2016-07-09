@@ -14,7 +14,10 @@ class Constants {
         //util class
     }
     
-    static let LOW_RES_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/w45"
+    static let LOW_RES_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/w92"
+    
+    static let MEDIUM_RES_IMAGE_ENDPOINT =
+        "https://image.tmdb.org/t/p/w342"
     
     static let HIGH_RES_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/original"
     
@@ -26,6 +29,6 @@ class Constants {
     
     static let SEARCH_URL = "http://api.themoviedb.org/3/search/movie"
     
-    static let INITIAL_PAGE_NUMBER = 1
-
+    static let IMAGE_RADIUS_CORNER:CGFloat = 10
+    
 }

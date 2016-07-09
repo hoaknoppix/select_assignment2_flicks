@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8nS-Nk-hrN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8nS-Nk-hrN">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -145,7 +145,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="144" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="A5g-Do-wrW">
-                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <rect key="frame" x="0.0" y="70" width="600" height="530"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" rowHeight="144" id="V5Q-7T-zpK" customClass="MovieCell" customModule="select_assignment2_flicks" customModuleProvider="target">
@@ -209,6 +209,61 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="get-fR-LAj">
+                                <rect key="frame" x="0.0" y="84" width="600" height="516"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="C6J-W4-yr2">
+                                    <size key="itemSize" width="200" height="300"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="aoJ-qA-0BW" customClass="MovieCollectionViewCell" customModule="select_assignment2_flicks" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="200" height="300"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="XZk-6p-eld">
+                                                    <rect key="frame" x="10" y="0.0" width="180" height="291"/>
+                                                    <subviews>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="kTq-bh-2Mb">
+                                                            <rect key="frame" x="0.0" y="0.0" width="180" height="291"/>
+                                                            <subviews>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Duf-hs-QFp">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="270"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="180" id="KRr-Xe-bje"/>
+                                                                        <constraint firstAttribute="height" constant="270" id="wqE-O1-m9w"/>
+                                                                    </constraints>
+                                                                </imageView>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQz-JS-Zau">
+                                                                    <rect key="frame" x="69" y="270" width="42" height="21"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="XZk-6p-eld" firstAttribute="centerX" secondItem="aoJ-qA-0BW" secondAttribute="centerX" id="5Ru-zR-dpa"/>
+                                            <constraint firstItem="XZk-6p-eld" firstAttribute="top" secondItem="aoJ-qA-0BW" secondAttribute="top" id="hAj-Kj-DLt"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="thumbnailImage" destination="Duf-hs-QFp" id="gIR-J0-ojk"/>
+                                            <outlet property="title" destination="RQz-JS-Zau" id="j8p-BB-hD8"/>
+                                            <segue destination="kHj-CQ-sTp" kind="show" id="Etl-jL-57g"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <view contentMode="scaleToFill" horizontalCompressionResistancePriority="755" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="eVT-1w-Wxm">
                                 <rect key="frame" x="0.0" y="278" width="600" height="44"/>
                                 <subviews>
@@ -229,29 +284,37 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="A5g-Do-wrW" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="4r6-ej-wW0"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="A5g-Do-wrW" secondAttribute="bottom" id="GoJ-CF-SQ0"/>
+                            <constraint firstItem="A5g-Do-wrW" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="70" id="7pI-6g-8os"/>
+                            <constraint firstItem="eVT-1w-Wxm" firstAttribute="trailing" secondItem="get-fR-LAj" secondAttribute="trailing" id="A4H-go-Smy"/>
+                            <constraint firstItem="eVT-1w-Wxm" firstAttribute="leading" secondItem="get-fR-LAj" secondAttribute="leading" id="A4l-A7-hkz"/>
+                            <constraint firstItem="A5g-Do-wrW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="HTL-QM-Q2Q"/>
+                            <constraint firstItem="get-fR-LAj" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="OCl-Gy-XjU"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="get-fR-LAj" secondAttribute="bottom" id="Qsn-2w-b5D"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="A5g-Do-wrW" secondAttribute="bottom" id="UEE-Lw-tWU"/>
+                            <constraint firstAttribute="trailing" secondItem="get-fR-LAj" secondAttribute="trailing" id="eBg-8b-79V"/>
+                            <constraint firstAttribute="trailing" secondItem="A5g-Do-wrW" secondAttribute="trailing" id="jqn-6Z-DLg"/>
                             <constraint firstItem="eVT-1w-Wxm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="rhu-Ej-kfH"/>
-                            <constraint firstAttribute="trailing" secondItem="A5g-Do-wrW" secondAttribute="trailing" id="sKf-Dl-Fuz"/>
-                            <constraint firstItem="eVT-1w-Wxm" firstAttribute="trailing" secondItem="A5g-Do-wrW" secondAttribute="trailing" id="sxr-Hn-zfW"/>
-                            <constraint firstItem="A5g-Do-wrW" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="xIq-jc-oQP"/>
-                            <constraint firstItem="eVT-1w-Wxm" firstAttribute="leading" secondItem="A5g-Do-wrW" secondAttribute="leading" id="xgj-KH-Pe1"/>
+                            <constraint firstItem="get-fR-LAj" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="uy2-Pp-yib"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Most Viewed" id="1Lk-e3-9MC"/>
                     <navigationItem key="navigationItem" title="VGC" id="e7j-Zw-Nn5">
-                        <barButtonItem key="rightBarButtonItem" style="plain" id="fmd-Jy-GDK">
-                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="fKK-Bo-Gmy">
-                                <rect key="frame" x="447" y="7" width="133" height="30"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="Bnu-lh-0sl">
+                            <segmentedControl key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="0Ff-I0-GFl">
+                                <rect key="frame" x="20" y="7" width="133" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <segments>
                                     <segment title="List"/>
                                     <segment title="Grid"/>
                                 </segments>
+                                <connections>
+                                    <action selector="onChangeDisplayView:" destination="BYZ-38-t0r" eventType="valueChanged" id="BOU-EY-dKy"/>
+                                </connections>
                             </segmentedControl>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="collectionView" destination="get-fR-LAj" id="XZZ-Pl-rsG"/>
                         <outlet property="errorView" destination="eVT-1w-Wxm" id="UWV-U8-4tl"/>
                         <outlet property="tableView" destination="A5g-Do-wrW" id="Vfe-bZ-SwM"/>
                     </connections>
@@ -263,7 +326,7 @@
         <!--iFlicks-->
         <scene sceneID="A7t-ii-IGd">
             <objects>
-                <navigationController title="iFlicks" automaticallyAdjustsScrollViewInsets="NO" id="8nS-Nk-hrN" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="navigationViewController" title="iFlicks" automaticallyAdjustsScrollViewInsets="NO" id="8nS-Nk-hrN" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Item" id="gUM-8M-HYP"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="XGL-hH-Dhm">
@@ -280,4 +343,7 @@
             <point key="canvasLocation" x="2816" y="218"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Etl-jL-57g"/>
+    </inferredMetricsTieBreakers>
 </document>
