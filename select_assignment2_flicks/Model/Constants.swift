@@ -39,4 +39,6 @@ class Constants {
     
     static let IMAGE_RADIUS_CORNER:CGFloat = 10
     
+    static let FIREBASE_URL = "https://sweltering-inferno-9854.firebaseio.com/"
+    
 }

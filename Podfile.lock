@@ -15,6 +15,7 @@ PODS:
   - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - Alamofire (3.4.0)
+  - Firebase (2.5.1)
   - JTProgressHUD (1.0.3)
   - MGSwipeTableCell (1.5.5)
   - ReachabilitySwift (2.3.3)
@@ -29,6 +30,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 3.0)
   - Alamofire (~> 3.4)
+  - Firebase (>= 2.5.1)
   - JTProgressHUD
   - MGSwipeTableCell
   - ReachabilitySwift
@@ -39,6 +41,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   Alamofire: c19a627cefd6a95f840401c49ab1f124e07f54ee
+  Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
   JTProgressHUD: d2519c41e664acb554932aac12f5a94b47d88a69
   MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
@@ -47,6 +50,6 @@ SPEC CHECKSUMS:
   SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: fb6547e7d1ce98484803e07df33bca525d2dab2b
+PODFILE CHECKSUM: b0085bb94607c192d9701248ae4600c1afe6aae3
 
 COCOAPODS: 1.0.0
