@@ -17,6 +17,7 @@
 		FF05D34F1D279E2500DFE526 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF05D34D1D279E2500DFE526 /* LaunchScreen.storyboard */; };
 		FF05D35A1D279E2500DFE526 /* select_assignment2_flicksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF05D3591D279E2500DFE526 /* select_assignment2_flicksTests.swift */; };
 		FF05D3651D279E2500DFE526 /* select_assignment2_flicksUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF05D3641D279E2500DFE526 /* select_assignment2_flicksUITests.swift */; };
+		FF8F6CCE1D31E61700F75D5D /* UIImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8F6CCD1D31E61700F75D5D /* UIImageView.swift */; };
 		FFD0E1E01D28ACF500DDD3EC /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD0E1DF1D28ACF500DDD3EC /* Movie.swift */; };
 		FFD0E1E31D28B32800DDD3EC /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD0E1E21D28B32800DDD3EC /* Constants.swift */; };
 		FFD5865B1D28CB9600D22A7F /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD5865A1D28CB9600D22A7F /* MovieCell.swift */; };
@@ -54,7 +55,7 @@
 		E9BCAA9384E9CC6C6F33EFAD /* Pods-select_assignment2_flicks.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-select_assignment2_flicks.release.xcconfig"; path = "Pods/Target Support Files/Pods-select_assignment2_flicks/Pods-select_assignment2_flicks.release.xcconfig"; sourceTree = "<group>"; };
 		FF05D3411D279E2400DFE526 /* select_assignment2_flicks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = select_assignment2_flicks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF05D3441D279E2500DFE526 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		FF05D3461D279E2500DFE526 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FF05D3461D279E2500DFE526 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = select_assignment2_flicks/ViewController.swift; sourceTree = "<group>"; };
 		FF05D3491D279E2500DFE526 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		FF05D34B1D279E2500DFE526 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		FF05D34E1D279E2500DFE526 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,11 +66,12 @@
 		FF05D3601D279E2500DFE526 /* select_assignment2_flicksUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = select_assignment2_flicksUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF05D3641D279E2500DFE526 /* select_assignment2_flicksUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = select_assignment2_flicksUITests.swift; sourceTree = "<group>"; };
 		FF05D3661D279E2500DFE526 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FF8F6CCD1D31E61700F75D5D /* UIImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UIImageView.swift; path = select_assignment2_flicks/extension/UIImageView.swift; sourceTree = "<group>"; };
 		FFD0E1DF1D28ACF500DDD3EC /* Movie.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Movie.swift; path = select_assignment2_flicks/Model/Movie.swift; sourceTree = "<group>"; };
 		FFD0E1E21D28B32800DDD3EC /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constants.swift; path = select_assignment2_flicks/Model/Constants.swift; sourceTree = "<group>"; };
 		FFD5865A1D28CB9600D22A7F /* MovieCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCell.swift; path = select_assignment2_flicks/UIModels/UICells/MovieCell.swift; sourceTree = "<group>"; };
 		FFD5865C1D28D3E400D22A7F /* select_assignment2_flicks-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "select_assignment2_flicks-Bridging-Header.h"; sourceTree = "<group>"; };
-		FFD5865F1D29136000D22A7F /* ViewDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewDetailsController.swift; sourceTree = "<group>"; };
+		FFD5865F1D29136000D22A7F /* ViewDetailsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ViewDetailsController.swift; path = select_assignment2_flicks/ViewDetailsController.swift; sourceTree = "<group>"; };
 		FFDA0A5C1D312640007EBD8D /* MovieCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MovieCollectionViewCell.swift; path = select_assignment2_flicks/UIModels/UICells/MovieCollectionViewCell.swift; sourceTree = "<group>"; };
 		FFDA0A5E1D3153AA007EBD8D /* ApiClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApiClient.swift; path = select_assignment2_flicks/api/ApiClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -128,6 +130,9 @@
 		FF05D3381D279E2400DFE526 = {
 			isa = PBXGroup;
 			children = (
+				FF8F6CD31D31E64A00F75D5D /* Storyboards */,
+				FF8F6CD11D31E62E00F75D5D /* Controllers */,
+				FF8F6CCF1D31E61B00F75D5D /* Extension */,
 				FFDA0A601D3153B4007EBD8D /* Api */,
 				FFD0E1E11D28AD0900DDD3EC /* Models */,
 				FFD0E1DD1D2894E700DDD3EC /* UIModels */,
@@ -155,12 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				FF05D3441D279E2500DFE526 /* AppDelegate.swift */,
-				FF05D3461D279E2500DFE526 /* ViewController.swift */,
-				FF05D3481D279E2500DFE526 /* Main.storyboard */,
 				FF05D34B1D279E2500DFE526 /* Assets.xcassets */,
-				FF05D34D1D279E2500DFE526 /* LaunchScreen.storyboard */,
 				FF05D3501D279E2500DFE526 /* Info.plist */,
-				FFD5865F1D29136000D22A7F /* ViewDetailsController.swift */,
 			);
 			path = select_assignment2_flicks;
 			sourceTree = "<group>";
@@ -181,6 +182,32 @@
 				FF05D3661D279E2500DFE526 /* Info.plist */,
 			);
 			path = select_assignment2_flicksUITests;
+			sourceTree = "<group>";
+		};
+		FF8F6CCF1D31E61B00F75D5D /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FF8F6CCD1D31E61700F75D5D /* UIImageView.swift */,
+			);
+			name = Extension;
+			sourceTree = "<group>";
+		};
+		FF8F6CD11D31E62E00F75D5D /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				FF05D3461D279E2500DFE526 /* ViewController.swift */,
+				FFD5865F1D29136000D22A7F /* ViewDetailsController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		FF8F6CD31D31E64A00F75D5D /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				FF05D3481D279E2500DFE526 /* Main.storyboard */,
+				FF05D34D1D279E2500DFE526 /* LaunchScreen.storyboard */,
+			);
+			name = Storyboards;
 			sourceTree = "<group>";
 		};
 		FFD0E1DD1D2894E700DDD3EC /* UIModels */ = {
@@ -480,6 +507,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FFD0E1E31D28B32800DDD3EC /* Constants.swift in Sources */,
+				FF8F6CCE1D31E61700F75D5D /* UIImageView.swift in Sources */,
 				FFDA0A5F1D3153AA007EBD8D /* ApiClient.swift in Sources */,
 				FFD5865B1D28CB9600D22A7F /* MovieCell.swift in Sources */,
 				FF05D3471D279E2500DFE526 /* ViewController.swift in Sources */,
@@ -528,6 +556,7 @@
 				FF05D3491D279E2500DFE526 /* Base */,
 			);
 			name = Main.storyboard;
+			path = select_assignment2_flicks;
 			sourceTree = "<group>";
 		};
 		FF05D34D1D279E2500DFE526 /* LaunchScreen.storyboard */ = {
@@ -536,6 +565,7 @@
 				FF05D34E1D279E2500DFE526 /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			path = select_assignment2_flicks;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

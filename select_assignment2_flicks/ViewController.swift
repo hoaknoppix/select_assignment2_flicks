@@ -31,9 +31,7 @@ class ViewController: UIViewController {
     }
     
     var viewMode: ViewMode = .NowPlaying
-    
-    let searchBar = UISearchBar()
-    
+        
     enum ViewMode {
         case NowPlaying, TopRated
     }
@@ -71,7 +69,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.titleView = searchBar
         
         setDisplayMode(.List)
         switch (viewMode) {
@@ -93,6 +90,8 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        self.errorView.hidden = getConnectionStatus()
     }
 
     override func didReceiveMemoryWarning() {
@@ -123,9 +122,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MovieCell
         let movie = movies[indexPath.row]
-        cell.overview.text = movie.overview
-        cell.title.text = movie.title
-        cell.thumbnailImage.setImageWithURL(NSURL(string: movie.lowResImageUrl)!)
+        cell.setData(movie)
         return cell
     }
     
@@ -143,10 +140,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         
+        self.errorView.hidden = getConnectionStatus()
+
         let currentOffset = scrollView.contentOffset.y
         
         if currentOffset < 0 {
-            self.errorView.hidden = getConnectionStatus()
             apiClient.resetCurrentPage()
             apiClient.fetchData({
                 self.movies = []
@@ -158,7 +156,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return
         }
         if currentOffset > scrollView.contentSize.height - scrollView.frame.height {
-            self.errorView.hidden = getConnectionStatus()
             apiClient.currentPage = apiClient.currentPage + 1
             apiClient.fetchData({
                 self.willFetchingData()
@@ -181,10 +178,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! MovieCollectionViewCell
         let movie = movies[indexPath.row]
-        cell.title.text = movie.title
-        cell.thumbnailImage.setImageWithURL(NSURL(string: movie.mediumResImageUrl)!)
-        cell.thumbnailImage.layer.cornerRadius = Constants.IMAGE_RADIUS_CORNER
-        cell.thumbnailImage.clipsToBounds = true
+        cell.setData(movie)
         return cell
     }
     
