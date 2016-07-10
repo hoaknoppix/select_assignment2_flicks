@@ -12,6 +12,8 @@ import SwiftyJSON
 import AFNetworking
 import ReachabilitySwift
 import JTProgressHUD
+import MGSwipeTableCell
+import Social
 
 class ViewController: UIViewController {
     
@@ -188,6 +190,61 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         }
         let movie = movies[indexPath.row]
         cell.setData(movie)
+        cell.leftButtons = [MGSwipeButton(title: "Favorite", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
+            self.movies[indexPath.row].isFavorite = true
+            tableView.reloadData()
+            return true
+            }]
+        cell.leftExpansion.buttonIndex = 0
+        
+        cell.rightButtons = [ MGSwipeButton(title: "Share", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
+            let actionSheet = UIAlertController(title: "", message: "Share", preferredStyle:.ActionSheet)
+            
+            let tweetAction = UIAlertAction(title: "Share on Twitter", style: .Default, handler: { (action) in
+                //
+                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) else {
+                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Twitter", preferredStyle: .Alert)
+                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertViewController, animated: true, completion: nil)
+                    return
+                }
+                let twitterComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                twitterComposeViewController.setInitialText(movie.title)
+            })
+            
+            let facebookAction = UIAlertAction(title: "Share on Facebook", style: .Default, handler: { (action) in
+                //
+                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) else {
+                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Facebook", preferredStyle: .Alert)
+                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertViewController, animated: true, completion: nil)
+                    return
+                }
+                let facebookComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                facebookComposeViewController.setInitialText(movie.title)
+            })
+            
+            let moreAction = UIAlertAction(title: "More", style: .Default, handler: { (action) in
+                let activityViewController = UIActivityViewController(activityItems: [movie.title], applicationActivities: nil)
+                self.presentViewController(activityViewController, animated: true, completion: nil)
+            })
+            
+            let dismissAction = UIAlertAction(title: "Close", style: .Default, handler: { (action) in
+                //
+            })
+            
+            actionSheet.addAction(tweetAction)
+            actionSheet.addAction(facebookAction)
+            actionSheet.addAction(moreAction)
+            actionSheet.addAction(dismissAction)
+            
+            self.presentViewController(actionSheet, animated: true, completion: nil)
+            
+            return true
+            }
+        ]
+        cell.rightExpansion.buttonIndex = 0
+        cell.backgroundColor = movie.isFavorite ? UIColor.brownColor() : UIColor.whiteColor()
         return cell
     }
     
