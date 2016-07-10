@@ -15,12 +15,12 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Add a tab bar for **Now Playing** and **Top Rated** movies.
-- [ ] Implement segmented control to switch between list view and grid view.
-- [ ] Add a search bar.
-- [ ] All images fade in.
+- [x] Add a tab bar for **Now Playing** and **Top Rated** movies.
+- [x] Implement segmented control to switch between list view and grid view.
+- [ ] Add a search bar. (Next commit for assignment 3)
+- [x] All images fade in.
 - [x] For the large poster, load the low-res image first, switch to high-res when complete.
-- [ ] Customize the highlight and selection effect of the cell.
+- [x] Customize the highlight and selection effect of the cell.
 - [x] Customize the navigation bar.
 
 The following **additional** features are implemented:
