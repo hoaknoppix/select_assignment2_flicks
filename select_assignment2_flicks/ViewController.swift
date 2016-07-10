@@ -12,6 +12,9 @@ import SwiftyJSON
 import AFNetworking
 import ReachabilitySwift
 import JTProgressHUD
+import MGSwipeTableCell
+import Social
+import Firebase
 
 class ViewController: UIViewController {
     
@@ -30,10 +33,18 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func onFiltersTap(sender: AnyObject) {
+        self.performSegueWithIdentifier("filters", sender: self)
+    }
+    
     var viewMode: ViewMode = .NowPlaying
-        
+    
+    let searchBar = UISearchBar()
+    
+    var filterButton = UIBarButtonItem()
+    
     enum ViewMode {
-        case NowPlaying, TopRated
+        case NowPlaying, TopRated, Search
     }
     
     enum DisplayMode {
@@ -56,7 +67,7 @@ class ViewController: UIViewController {
     
     var movies: [Movie] = []
         
-    func willFetchingData() {
+    func willFetchData() {
         JTProgressHUD.show()
     }
     
@@ -68,22 +79,36 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
+        filterButton = UIBarButtonItem(title: "Filters", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(onFiltersTap))
+        
         super.viewDidLoad()
         
         setDisplayMode(.List)
         switch (viewMode) {
         case .NowPlaying:
             apiClient.fetchDataNowPlaying(1, before: {
-                self.willFetchingData()
+                self.willFetchData()
             }) { (movies) in
                 self.onFetchingDataComplete(movies)
             }
         case .TopRated:
             apiClient.fetchDataTopRated(1, before: {
-                self.willFetchingData()
+                self.willFetchData()
             }) { (movies) in
                 self.onFetchingDataComplete(movies)
             }
+        case .Search:
+            navigationItem.titleView = searchBar
+            navigationItem.rightBarButtonItem = filterButton
+            navigationItem.leftBarButtonItem = nil
+            apiClient.searchData(1, query: "", before: {
+                self.willFetchData()
+                }, completion: { (movies) in
+                    self.onFetchingDataComplete(movies)
+            })
+            searchBar.delegate = self
+            searchBar.becomeFirstResponder()
         }
         
         tableView.delegate = self
@@ -100,6 +125,40 @@ class ViewController: UIViewController {
 
 }
 
+//MARK: -Searchbar
+extension ViewController: UISearchBarDelegate {
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        movies = []
+        apiClient.searchData(1, query: searchText, before: {
+            self.willFetchData()
+            }, completion: { (movies) in
+                self.onFetchingDataComplete(movies)
+        })
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.text = ""
+        apiClient.fetchDataNowPlaying(1, before: { 
+            self.movies = []
+            self.willFetchData()
+            }) { (movies) in
+                self.onFetchingDataComplete(movies)
+        }
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+    }
+    
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        
+    }
+}
+
 // MARK: -reload data methods
 extension ViewController {
     func reloadViewData() {
@@ -112,6 +171,13 @@ extension ViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard movies.count > 0 else {
+            let errorLabel = errorView.subviews[0] as! UILabel
+            errorLabel.text = "No movies found"
+            errorView.hidden = false
+            return 0
+        }
+        errorView.hidden = true
         return movies.count
     }
     
@@ -121,8 +187,77 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MovieCell
+        guard indexPath.row < movies.count else {
+            return cell
+        }
         let movie = movies[indexPath.row]
         cell.setData(movie)
+        cell.leftButtons = [MGSwipeButton(title: "Favorite", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
+            movie.setFavoriteFireBase({ 
+                tableView.reloadData()
+            })
+            
+            /*using with Realm
+            self.movies[indexPath.row].isFavorite = true
+            tableView.reloadData()
+            */
+            
+            return true
+            }]
+        cell.leftExpansion.buttonIndex = 0
+        
+        cell.rightButtons = [ MGSwipeButton(title: "Share", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
+            let actionSheet = UIAlertController(title: "", message: "Share", preferredStyle:.ActionSheet)
+            
+            let tweetAction = UIAlertAction(title: "Share on Twitter", style: .Default, handler: { (action) in
+                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) else {
+                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Twitter", preferredStyle: .Alert)
+                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertViewController, animated: true, completion: nil)
+                    return
+                }
+                let twitterComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                twitterComposeViewController.setInitialText(movie.title)
+            })
+            
+            let facebookAction = UIAlertAction(title: "Share on Facebook", style: .Default, handler: { (action) in
+                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) else {
+                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Facebook", preferredStyle: .Alert)
+                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertViewController, animated: true, completion: nil)
+                    return
+                }
+                let facebookComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                facebookComposeViewController.setInitialText(movie.title)
+            })
+            
+            let moreAction = UIAlertAction(title: "More", style: .Default, handler: { (action) in
+                let activityViewController = UIActivityViewController(activityItems: [movie.title], applicationActivities: nil)
+                self.presentViewController(activityViewController, animated: true, completion: nil)
+            })
+            
+            let dismissAction = UIAlertAction(title: "Close", style: .Default, handler: { (action) in
+            })
+            
+            actionSheet.addAction(tweetAction)
+            actionSheet.addAction(facebookAction)
+            actionSheet.addAction(moreAction)
+            actionSheet.addAction(dismissAction)
+            
+            self.presentViewController(actionSheet, animated: true, completion: nil)
+            
+            return true
+            }
+        ]
+        cell.rightExpansion.buttonIndex = 0
+        movie.isFavoriteFireBase { (list, value) in
+            cell.backgroundColor = value ? UIColor.yellowColor() : UIColor.whiteColor()
+        }
+        
+        /* using with Realm
+        cell.backgroundColor = movie.isFavorite ? UIColor.yellowColor() : UIColor.whiteColor()
+        */
+        
         return cell
     }
     
@@ -148,7 +283,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             apiClient.resetCurrentPage()
             apiClient.fetchData({
                 self.movies = []
-                self.willFetchingData()
+                self.willFetchData()
                 }, completion: { (movies) in
                     self.onFetchingDataComplete(movies)
             })
@@ -158,7 +293,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if currentOffset > scrollView.contentSize.height - scrollView.frame.height {
             apiClient.currentPage = apiClient.currentPage + 1
             apiClient.fetchData({
-                self.willFetchingData()
+                self.willFetchData()
                 }, completion: { (movies) in
                     self.onFetchingDataComplete(movies)
             })
@@ -195,10 +330,43 @@ extension ViewController {
                 indexPath = collectionView.indexPathForCell(sender as! UICollectionViewCell)!
             default: break
         }
-        
-        let movie = movies[indexPath!.row]
-        let viewDetails = segue.destinationViewController as! ViewDetailsController
-        viewDetails.movie = movie
+        switch segue.identifier! {
+        case "viewDetails":
+                let movie = movies[indexPath!.row]
+                let viewDetails = segue.destinationViewController as! ViewDetailsController
+                viewDetails.movie = movie
+        case "filters":
+                let filters = segue.destinationViewController as! FilterViewController
+                filters.delegate = self
+                filters.datasource = self
+        default:
+            break
+        }
     }
 }
+
+//MARK: -filter methods
+extension ViewController: FilterViewControllerDelegate, FilterViewControllerDataSource {
+    func filterViewController(showAdultContent: Bool, releaseYear: Int?, primaryReleaseYear: Int?) {
+        apiClient.searchData(1, includeAdult: showAdultContent, releaseYear: releaseYear, primaryReleaseYear: primaryReleaseYear, before: { 
+            self.willFetchData()
+            }) { (movies) in
+                self.movies = []
+                self.onFetchingDataComplete(movies)
+        }
+    }
+    
+    func showAdultContent() -> Bool {
+        return self.apiClient.currentIncludeAdult!
+    }
+    
+    func releaseYear() -> Int? {
+        return self.apiClient.currentReleaseYear
+    }
+    
+    func primaryReleaseYear() -> Int? {
+        return self.apiClient.currentPrimaryReleaseYear
+    }
+}
+
 

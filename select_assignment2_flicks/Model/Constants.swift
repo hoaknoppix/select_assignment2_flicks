@@ -14,6 +14,14 @@ class Constants {
         //util class
     }
     
+    static var YEARS: [Int] {
+        let date = NSDate()
+        let calendar = NSCalendar.currentCalendar()
+        let components = calendar.components([.Year], fromDate: date)
+        let currentYear =  components.year
+        return Array(1899...currentYear).reverse()
+    }
+    
     static let LOW_RES_IMAGE_ENDPOINT = "https://image.tmdb.org/t/p/w92"
     
     static let MEDIUM_RES_IMAGE_ENDPOINT =
@@ -27,8 +35,10 @@ class Constants {
     
     static let TOP_RATED_URL = "https://api.themoviedb.org/3/movie/top_rated"
     
-    static let SEARCH_URL = "http://api.themoviedb.org/3/search/movie"
+    static let SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
     
     static let IMAGE_RADIUS_CORNER:CGFloat = 10
+    
+    static let FIREBASE_URL = "https://sweltering-inferno-9854.firebaseio.com/"
     
 }
