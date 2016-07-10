@@ -18,6 +18,11 @@ PODS:
   - JTProgressHUD (1.0.3)
   - MGSwipeTableCell (1.5.5)
   - ReachabilitySwift (2.3.3)
+  - Realm (0.102.1):
+    - Realm/Headers (= 0.102.1)
+  - Realm/Headers (0.102.1)
+  - RealmSwift (0.102.1):
+    - Realm (= 0.102.1)
   - SnapKit (0.21.0)
   - SwiftyJSON (2.3.2)
 
@@ -27,6 +32,7 @@ DEPENDENCIES:
   - JTProgressHUD
   - MGSwipeTableCell
   - ReachabilitySwift
+  - RealmSwift
   - SnapKit
   - SwiftyJSON
 
@@ -36,9 +42,11 @@ SPEC CHECKSUMS:
   JTProgressHUD: d2519c41e664acb554932aac12f5a94b47d88a69
   MGSwipeTableCell: bafeb5f351124544c9364ecbdf24c7b06a37d340
   ReachabilitySwift: e0f6b6f280effb47731acfaaa2d5ffe223703793
+  Realm: 5254be610db3e5024879684717bf038990bb59ec
+  RealmSwift: 3e24e6bcf56d98ccc134f4909e00839b81a659af
   SnapKit: 2756fe24b706367af224c9c508d2f9166d03354c
   SwiftyJSON: 04ccea08915aa0109039157c7974cf0298da292a
 
-PODFILE CHECKSUM: f7c0d3eddf449b705fe159e961a855dbbdaeea7d
+PODFILE CHECKSUM: fb6547e7d1ce98484803e07df33bca525d2dab2b
 
 COCOAPODS: 1.0.0

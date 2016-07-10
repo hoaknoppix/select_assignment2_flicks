@@ -124,6 +124,7 @@ class ViewController: UIViewController {
 
 }
 
+//MARK: -Searchbar
 extension ViewController: UISearchBarDelegate {
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
@@ -201,7 +202,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             let actionSheet = UIAlertController(title: "", message: "Share", preferredStyle:.ActionSheet)
             
             let tweetAction = UIAlertAction(title: "Share on Twitter", style: .Default, handler: { (action) in
-                //
                 guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) else {
                     let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Twitter", preferredStyle: .Alert)
                     alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
@@ -213,7 +213,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             })
             
             let facebookAction = UIAlertAction(title: "Share on Facebook", style: .Default, handler: { (action) in
-                //
                 guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) else {
                     let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Facebook", preferredStyle: .Alert)
                     alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
@@ -230,7 +229,6 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             })
             
             let dismissAction = UIAlertAction(title: "Close", style: .Default, handler: { (action) in
-                //
             })
             
             actionSheet.addAction(tweetAction)
@@ -244,7 +242,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
         ]
         cell.rightExpansion.buttonIndex = 0
-        cell.backgroundColor = movie.isFavorite ? UIColor.brownColor() : UIColor.whiteColor()
+        cell.backgroundColor = movie.isFavorite ? UIColor.yellowColor() : UIColor.whiteColor()
         return cell
     }
     
