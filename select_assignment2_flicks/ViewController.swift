@@ -30,10 +30,18 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction func onFiltersTap(sender: AnyObject) {
+        self.performSegueWithIdentifier("filters", sender: self)
+    }
+    
     var viewMode: ViewMode = .NowPlaying
-        
+    
+    let searchBar = UISearchBar()
+    
+    var filterButton = UIBarButtonItem()
+    
     enum ViewMode {
-        case NowPlaying, TopRated
+        case NowPlaying, TopRated, Search
     }
     
     enum DisplayMode {
@@ -56,7 +64,7 @@ class ViewController: UIViewController {
     
     var movies: [Movie] = []
         
-    func willFetchingData() {
+    func willFetchData() {
         JTProgressHUD.show()
     }
     
@@ -68,22 +76,36 @@ class ViewController: UIViewController {
     }
     
     override func viewDidLoad() {
+        
+        filterButton = UIBarButtonItem(title: "Filters", style: UIBarButtonItemStyle.Plain, target: self, action: #selector(onFiltersTap))
+        
         super.viewDidLoad()
         
         setDisplayMode(.List)
         switch (viewMode) {
         case .NowPlaying:
             apiClient.fetchDataNowPlaying(1, before: {
-                self.willFetchingData()
+                self.willFetchData()
             }) { (movies) in
                 self.onFetchingDataComplete(movies)
             }
         case .TopRated:
             apiClient.fetchDataTopRated(1, before: {
-                self.willFetchingData()
+                self.willFetchData()
             }) { (movies) in
                 self.onFetchingDataComplete(movies)
             }
+        case .Search:
+            navigationItem.titleView = searchBar
+            navigationItem.rightBarButtonItem = filterButton
+            navigationItem.leftBarButtonItem = nil
+            apiClient.searchData(1, query: "", before: {
+                self.willFetchData()
+                }, completion: { (movies) in
+                    self.onFetchingDataComplete(movies)
+            })
+            searchBar.delegate = self
+            searchBar.becomeFirstResponder()
         }
         
         tableView.delegate = self
@@ -100,6 +122,39 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController: UISearchBarDelegate {
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        movies = []
+        apiClient.searchData(1, query: searchText, before: {
+            self.willFetchData()
+            }, completion: { (movies) in
+                self.onFetchingDataComplete(movies)
+        })
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.text = ""
+        apiClient.fetchDataNowPlaying(1, before: { 
+            self.movies = []
+            self.willFetchData()
+            }) { (movies) in
+                self.onFetchingDataComplete(movies)
+        }
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+    }
+    
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        
+    }
+}
+
 // MARK: -reload data methods
 extension ViewController {
     func reloadViewData() {
@@ -112,6 +167,13 @@ extension ViewController {
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        guard movies.count > 0 else {
+            let errorLabel = errorView.subviews[0] as! UILabel
+            errorLabel.text = "No movies found"
+            errorView.hidden = false
+            return 0
+        }
+        errorView.hidden = true
         return movies.count
     }
     
@@ -121,6 +183,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! MovieCell
+        guard indexPath.row < movies.count else {
+            return cell
+        }
         let movie = movies[indexPath.row]
         cell.setData(movie)
         return cell
@@ -148,7 +213,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             apiClient.resetCurrentPage()
             apiClient.fetchData({
                 self.movies = []
-                self.willFetchingData()
+                self.willFetchData()
                 }, completion: { (movies) in
                     self.onFetchingDataComplete(movies)
             })
@@ -158,7 +223,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         if currentOffset > scrollView.contentSize.height - scrollView.frame.height {
             apiClient.currentPage = apiClient.currentPage + 1
             apiClient.fetchData({
-                self.willFetchingData()
+                self.willFetchData()
                 }, completion: { (movies) in
                     self.onFetchingDataComplete(movies)
             })
@@ -195,10 +260,43 @@ extension ViewController {
                 indexPath = collectionView.indexPathForCell(sender as! UICollectionViewCell)!
             default: break
         }
-        
-        let movie = movies[indexPath!.row]
-        let viewDetails = segue.destinationViewController as! ViewDetailsController
-        viewDetails.movie = movie
+        switch segue.identifier! {
+        case "viewDetails":
+                let movie = movies[indexPath!.row]
+                let viewDetails = segue.destinationViewController as! ViewDetailsController
+                viewDetails.movie = movie
+        case "filters":
+                let filters = segue.destinationViewController as! FilterViewController
+                filters.delegate = self
+                filters.datasource = self
+        default:
+            break
+        }
     }
 }
+
+//MARK: -filter methods
+extension ViewController: FilterViewControllerDelegate, FilterViewControllerDataSource {
+    func filterViewController(showAdultContent: Bool, releaseYear: Int?, primaryReleaseYear: Int?) {
+        apiClient.searchData(1, includeAdult: showAdultContent, releaseYear: releaseYear, primaryReleaseYear: primaryReleaseYear, before: { 
+            self.willFetchData()
+            }) { (movies) in
+                self.movies = []
+                self.onFetchingDataComplete(movies)
+        }
+    }
+    
+    func showAdultContent() -> Bool {
+        return self.apiClient.currentIncludeAdult!
+    }
+    
+    func releaseYear() -> Int? {
+        return self.apiClient.currentReleaseYear
+    }
+    
+    func primaryReleaseYear() -> Int? {
+        return self.apiClient.currentPrimaryReleaseYear
+    }
+}
+
 

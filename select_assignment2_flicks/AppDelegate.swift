@@ -47,20 +47,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let storyboard = UIStoryboard.init(name: "Main", bundle: nil)
         
+        //Now Playing Tab
         let nowPlayingNavigationViewController = storyboard.instantiateViewControllerWithIdentifier("navigationViewController") as! UINavigationController
         nowPlayingNavigationViewController.tabBarItem.title = "Now Playing"
         nowPlayingNavigationViewController.tabBarItem.image = UIImage(named: "nowPlaying")
         let nowPlayingViewController = nowPlayingNavigationViewController.viewControllers[0] as! ViewController
         nowPlayingViewController.viewMode = .NowPlaying
         
+        //Top Rated Tab
         let topRatedNavigationViewController = storyboard.instantiateViewControllerWithIdentifier("navigationViewController") as! UINavigationController
         topRatedNavigationViewController.tabBarItem.title = "Top Rated"
         topRatedNavigationViewController.tabBarItem.image = UIImage(named: "topRated")
         let topRatedViewController = topRatedNavigationViewController.viewControllers[0] as! ViewController
         topRatedViewController.viewMode = .TopRated
         
+        //Search Tab
+        let searchNavigationViewController = storyboard.instantiateViewControllerWithIdentifier("navigationViewController") as! UINavigationController
+        searchNavigationViewController.tabBarItem.title="Search"
+        searchNavigationViewController.tabBarItem.image = UIImage(named: "search")
+        let searchViewController = searchNavigationViewController.viewControllers[0] as! ViewController
+        searchViewController.viewMode = .Search
+        
         let tabBarController = UITabBarController()
-        tabBarController.viewControllers = [nowPlayingNavigationViewController, topRatedNavigationViewController]
+        tabBarController.viewControllers = [nowPlayingNavigationViewController, topRatedNavigationViewController, searchNavigationViewController]
         
         window?.rootViewController = tabBarController
         
