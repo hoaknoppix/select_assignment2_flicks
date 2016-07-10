@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "select_assignment2_flicks/ViewController.swift"
-            timestampString = "489857719.206011"
+            timestampString = "489859192.183867"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "300"
-            endingLineNumber = "300"
+            startingLineNumber = "307"
+            endingLineNumber = "307"
             landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
