@@ -8,16 +8,26 @@
 
 import UIKit
 import SwiftyJSON
+import RealmSwift
+
+class MovieRealm : Object {
+    var id: String = ""
+}
 
 struct Movie {
     
     init(json: JSON) {
+        self.id = json["id"].stringValue
         self.title = json["title"].stringValue
         self.imageUrl = json["poster_path"].stringValue
         self.voteAverage = json["vote_average"].doubleValue
         self.overview = json["overview"].stringValue
         self.releaseDate = json["release_date"].stringValue
     }
+    
+    let realm = try! Realm()
+    
+    var id: String = ""
     
     var title: String = ""
     
@@ -31,7 +41,22 @@ struct Movie {
     
     var voteAverage: Double = 0
     
-    var isFavorite: Bool = false
+    var isFavorite: Bool {
+        get {
+            let movieRealms = realm.objects(MovieRealm).filter("id CONTAINS '\(self.id)'")
+            return movieRealms.count == 1
+        }
+        set {
+            try! realm.write {
+                guard !isFavorite else {
+                    return
+                }
+                let movieRealm = MovieRealm()
+                movieRealm.id = self.id
+                realm.add(movieRealm)
+            }
+        }
+    }
     
     
     var lowResImageUrl: String {

@@ -20,6 +20,8 @@ target 'select_assignment2_flicks' do
   pod 'SnapKit'
   
   pod 'MGSwipeTableCell'
+  
+  pod 'RealmSwift'
 
   target 'select_assignment2_flicksTests' do
     inherit! :search_paths

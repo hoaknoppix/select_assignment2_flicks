@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "select_assignment2_flicks/Model/Movie.swift"
-            timestampString = "489206274.576076"
+            timestampString = "489851508.300602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "11"
-            endingLineNumber = "11"
-            landmarkName = "Movie"
+            startingLineNumber = "13"
+            endingLineNumber = "13"
+            landmarkName = "MovieRealm"
             landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "select_assignment2_flicks/ViewController.swift"
-            timestampString = "489847094.380521"
+            timestampString = "489851508.300602"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "294"
-            endingLineNumber = "294"
+            startingLineNumber = "292"
+            endingLineNumber = "292"
             landmarkName = "ViewController"
             landmarkType = "3">
          </BreakpointContent>
