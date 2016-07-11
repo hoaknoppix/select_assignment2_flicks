@@ -14,6 +14,7 @@ import ReachabilitySwift
 import JTProgressHUD
 import MGSwipeTableCell
 import Social
+import Firebase
 
 class ViewController: UIViewController {
     
@@ -192,8 +193,15 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let movie = movies[indexPath.row]
         cell.setData(movie)
         cell.leftButtons = [MGSwipeButton(title: "Favorite", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
+            movie.setFavoriteFireBase({ 
+                tableView.reloadData()
+            })
+            
+            /*using with Realm
             self.movies[indexPath.row].isFavorite = true
             tableView.reloadData()
+            */
+            
             return true
             }]
         cell.leftExpansion.buttonIndex = 0
@@ -242,7 +250,14 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             }
         ]
         cell.rightExpansion.buttonIndex = 0
+        movie.isFavoriteFireBase { (list, value) in
+            cell.backgroundColor = value ? UIColor.yellowColor() : UIColor.whiteColor()
+        }
+        
+        /* using with Realm
         cell.backgroundColor = movie.isFavorite ? UIColor.yellowColor() : UIColor.whiteColor()
+        */
+        
         return cell
     }
     

@@ -22,6 +22,8 @@ target 'select_assignment2_flicks' do
   pod 'MGSwipeTableCell'
   
   pod 'RealmSwift'
+  
+  pod 'Firebase', '>= 2.5.1'
 
   target 'select_assignment2_flicksTests' do
     inherit! :search_paths
