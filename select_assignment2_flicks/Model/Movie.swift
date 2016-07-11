@@ -31,6 +31,8 @@ struct Movie {
     
     var voteAverage: Double = 0
     
+    var isFavorite: Bool = false
+    
     
     var lowResImageUrl: String {
         return Constants.LOW_RES_IMAGE_ENDPOINT + self.imageUrl

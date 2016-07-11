@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MGSwipeTableCell
 
-class MovieCell: UITableViewCell {
+class MovieCell: MGSwipeTableCell {
 
     @IBOutlet weak var thumbnailImage: UIImageView!
     @IBOutlet weak var title: UILabel!

@@ -17,7 +17,9 @@ target 'select_assignment2_flicks' do
   
   pod 'ReachabilitySwift'
 
-  pod 'SnapKit'	
+  pod 'SnapKit'
+  
+  pod 'MGSwipeTableCell'
 
   target 'select_assignment2_flicksTests' do
     inherit! :search_paths
