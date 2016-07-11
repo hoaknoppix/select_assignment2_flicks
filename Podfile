@@ -17,6 +17,8 @@ target 'select_assignment2_flicks' do
   
   pod 'ReachabilitySwift'
 
+  pod 'SnapKit'	
+
   target 'select_assignment2_flicksTests' do
     inherit! :search_paths
     # Pods for testing

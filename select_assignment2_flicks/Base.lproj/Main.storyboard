@@ -204,7 +204,7 @@
                                             <outlet property="overview" destination="lLI-pk-qBh" id="P8d-rb-dRz"/>
                                             <outlet property="thumbnailImage" destination="45C-Mu-RCu" id="q8n-7u-CYB"/>
                                             <outlet property="title" destination="o7P-T2-QD2" id="yhu-Y7-V8h"/>
-                                            <segue destination="kHj-CQ-sTp" kind="show" id="6K8-g9-Zew"/>
+                                            <segue destination="kHj-CQ-sTp" kind="show" identifier="viewDetails" id="6K8-g9-Zew"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -259,7 +259,7 @@
                                         <connections>
                                             <outlet property="thumbnailImage" destination="Duf-hs-QFp" id="gIR-J0-ojk"/>
                                             <outlet property="title" destination="RQz-JS-Zau" id="j8p-BB-hD8"/>
-                                            <segue destination="kHj-CQ-sTp" kind="show" id="Etl-jL-57g"/>
+                                            <segue destination="kHj-CQ-sTp" kind="show" identifier="viewDetails" id="Etl-jL-57g"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -317,11 +317,101 @@
                         <outlet property="collectionView" destination="get-fR-LAj" id="XZZ-Pl-rsG"/>
                         <outlet property="errorView" destination="eVT-1w-Wxm" id="UWV-U8-4tl"/>
                         <outlet property="tableView" destination="A5g-Do-wrW" id="Vfe-bZ-SwM"/>
+                        <segue destination="W0a-9u-JKY" kind="show" identifier="filters" id="umg-CV-JAd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3606" y="218"/>
+        </scene>
+        <!--Filter View Controller-->
+        <scene sceneID="tOS-hI-oGA">
+            <objects>
+                <viewController id="W0a-9u-JKY" customClass="FilterViewController" customModule="select_assignment2_flicks" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qkt-Ri-euX"/>
+                        <viewControllerLayoutGuide type="bottom" id="xzy-Xq-Vbj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="o5t-Bx-3bR">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="pEd-Bh-1x0">
+                                <rect key="frame" x="217" y="117" width="222" height="31"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Show Adult Content" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHS-Kv-bmc">
+                                        <rect key="frame" x="0.0" y="0.0" width="153" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6HN-QZ-SEI">
+                                        <rect key="frame" x="173" y="0.0" width="51" height="31"/>
+                                    </switch>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKE-mb-r1b">
+                                <rect key="frame" x="107" y="224" width="262" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Primary Release Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NlT-zW-zY5">
+                                        <rect key="frame" x="0.0" y="0.0" width="162" height="100"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ouE-r6-SHu">
+                                        <rect key="frame" x="162" y="0.0" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="100" id="2RP-7q-f52"/>
+                                            <constraint firstAttribute="width" constant="100" id="a0V-4g-W3v"/>
+                                        </constraints>
+                                    </pickerView>
+                                </subviews>
+                            </stackView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bg4-Jj-Ge5">
+                                <rect key="frame" x="0.0" y="10064" width="600" height="0.0"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </tableView>
+                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lx2-9e-2cg">
+                                <rect key="frame" x="91" y="156" width="198" height="100"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Release Year" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qOH-U5-Jx9">
+                                        <rect key="frame" x="0.0" y="0.0" width="98" height="100"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ra6-CZ-FgN">
+                                        <rect key="frame" x="98" y="0.0" width="100" height="100"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="100" id="enG-xv-uK6"/>
+                                            <constraint firstAttribute="height" constant="100" id="vVu-mf-3w5"/>
+                                        </constraints>
+                                    </pickerView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="bg4-Jj-Ge5" firstAttribute="leading" secondItem="o5t-Bx-3bR" secondAttribute="leading" id="IAF-8H-rPb"/>
+                            <constraint firstItem="bg4-Jj-Ge5" firstAttribute="centerY" secondItem="o5t-Bx-3bR" secondAttribute="centerY" id="Lu8-dL-fG8"/>
+                            <constraint firstItem="bg4-Jj-Ge5" firstAttribute="top" secondItem="qkt-Ri-euX" secondAttribute="bottom" constant="20" id="Muv-hV-OLR"/>
+                            <constraint firstItem="bg4-Jj-Ge5" firstAttribute="centerX" secondItem="o5t-Bx-3bR" secondAttribute="centerX" id="nD0-XE-xqw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pickerPrimaryReleaseYear" destination="ouE-r6-SHu" id="nga-br-40F"/>
+                        <outlet property="pickerReleaseYear" destination="ra6-CZ-FgN" id="Fbc-ae-oxe"/>
+                        <outlet property="stackPrimaryReleaseYear" destination="XKE-mb-r1b" id="PfA-Rv-hOc"/>
+                        <outlet property="stackReleaseYear" destination="lx2-9e-2cg" id="cj3-wM-U4E"/>
+                        <outlet property="stackShowAdultContent" destination="pEd-Bh-1x0" id="wfh-tS-poy"/>
+                        <outlet property="switchShowAdult" destination="6HN-QZ-SEI" id="826-xm-BFR"/>
+                        <outlet property="tableView" destination="bg4-Jj-Ge5" id="inb-fk-ubR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6RC-kd-Kpd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4342" y="896"/>
         </scene>
         <!--iFlicks-->
         <scene sceneID="A7t-ii-IGd">
@@ -344,6 +434,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Etl-jL-57g"/>
+        <segue reference="6K8-g9-Zew"/>
     </inferredMetricsTieBreakers>
 </document>
