@@ -37,11 +37,16 @@ class ViewController: UIViewController {
         self.performSegueWithIdentifier("filters", sender: self)
     }
     
+    var fireBaseRef = Firebase(url: Constants.FIREBASE_URL)
+
+    
     var viewMode: ViewMode = .NowPlaying
     
     let searchBar = UISearchBar()
     
     var filterButton = UIBarButtonItem()
+    
+    var fireBaseFavoriteIds: [String] = []
     
     enum ViewMode {
         case NowPlaying, TopRated, Search
@@ -72,7 +77,18 @@ class ViewController: UIViewController {
     }
     
     func onFetchingDataComplete(movies: [Movie]) {
+        let firstIndex = self.movies.count
+        let lastIndex = firstIndex + movies.count
         self.movies.appendContentsOf(movies)
+        // here, we can update the favorited status. 
+        for index in firstIndex..<lastIndex {
+            self.movies[index].favorited = RealmHelper.isFavorite(self.movies[index].id)
+        }
+        
+        /*
+ 
+         firebaseRef.observeSingleEventOfType
+        */
         JTProgressHUD.hide()
         tableView.reloadData()
         collectionView.reloadData()
@@ -117,7 +133,20 @@ class ViewController: UIViewController {
         collectionView.dataSource = self
         
         self.errorView.hidden = getConnectionStatus()
+        
+        let deviceRef = fireBaseRef.childByAppendingPath(UIDevice.currentDevice().identifierForVendor!.UUIDString)
+        let favoritesRef = deviceRef.childByAppendingPath("favorites")
+        
+        favoritesRef.observeSingleEventOfType(.ChildAdded, withBlock:  { (snapshot) in
+            if let favoriteIds = snapshot.value as? [String] {
+                self.fireBaseFavoriteIds = favoriteIds
+                for favoriteId in favoriteIds {
+                    RealmHelper.setFavorited(favoriteId)
+                }
+            }
+        })
     }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -191,72 +220,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             return cell
         }
         let movie = movies[indexPath.row]
-        cell.setData(movie)
-        cell.leftButtons = [MGSwipeButton(title: "Favorite", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
-            movie.setFavoriteFireBase({ 
-                tableView.reloadData()
-            })
-            
-            /*using with Realm
-            self.movies[indexPath.row].isFavorite = true
-            tableView.reloadData()
-            */
-            
-            return true
-            }]
-        cell.leftExpansion.buttonIndex = 0
-        
-        cell.rightButtons = [ MGSwipeButton(title: "Share", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
-            let actionSheet = UIAlertController(title: "", message: "Share", preferredStyle:.ActionSheet)
-            
-            let tweetAction = UIAlertAction(title: "Share on Twitter", style: .Default, handler: { (action) in
-                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) else {
-                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Twitter", preferredStyle: .Alert)
-                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-                    self.presentViewController(alertViewController, animated: true, completion: nil)
-                    return
-                }
-                let twitterComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-                twitterComposeViewController.setInitialText(movie.title)
-            })
-            
-            let facebookAction = UIAlertAction(title: "Share on Facebook", style: .Default, handler: { (action) in
-                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) else {
-                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Facebook", preferredStyle: .Alert)
-                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
-                    self.presentViewController(alertViewController, animated: true, completion: nil)
-                    return
-                }
-                let facebookComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-                facebookComposeViewController.setInitialText(movie.title)
-            })
-            
-            let moreAction = UIAlertAction(title: "More", style: .Default, handler: { (action) in
-                let activityViewController = UIActivityViewController(activityItems: [movie.title], applicationActivities: nil)
-                self.presentViewController(activityViewController, animated: true, completion: nil)
-            })
-            
-            let dismissAction = UIAlertAction(title: "Close", style: .Default, handler: { (action) in
-            })
-            
-            actionSheet.addAction(tweetAction)
-            actionSheet.addAction(facebookAction)
-            actionSheet.addAction(moreAction)
-            actionSheet.addAction(dismissAction)
-            
-            self.presentViewController(actionSheet, animated: true, completion: nil)
-            
-            return true
-            }
-        ]
-        cell.rightExpansion.buttonIndex = 0
-        movie.isFavoriteFireBase { (list, value) in
-            cell.backgroundColor = value ? UIColor.yellowColor() : UIColor.whiteColor()
-        }
-        
-        /* using with Realm
-        cell.backgroundColor = movie.isFavorite ? UIColor.yellowColor() : UIColor.whiteColor()
-        */
+        cell.setData(movie, buttonShare: getButtonShare(movie.title), buttonFavorite: getButtonFavorite(movie.favorited, indexPath: indexPath))
         
         return cell
     }
@@ -273,8 +237,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return reachability.isReachable()
     }
     
+
+    
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
-        
+
         self.errorView.hidden = getConnectionStatus()
 
         let currentOffset = scrollView.contentOffset.y
@@ -284,19 +250,13 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
             apiClient.fetchData({
                 self.movies = []
                 self.willFetchData()
-                }, completion: { (movies) in
-                    self.onFetchingDataComplete(movies)
-            })
+                }, completion: self.onFetchingDataComplete)
 
             return
         }
         if currentOffset > scrollView.contentSize.height - scrollView.frame.height {
             apiClient.currentPage = apiClient.currentPage + 1
-            apiClient.fetchData({
-                self.willFetchData()
-                }, completion: { (movies) in
-                    self.onFetchingDataComplete(movies)
-            })
+            apiClient.fetchData(self.willFetchData, completion: self.onFetchingDataComplete)
             return
         }
     }
@@ -366,6 +326,85 @@ extension ViewController: FilterViewControllerDelegate, FilterViewControllerData
     
     func primaryReleaseYear() -> Int? {
         return self.apiClient.currentPrimaryReleaseYear
+    }
+}
+
+//MARK: -swipe buttons
+
+extension ViewController {
+    func getButtonFavorite(favorited: Bool, indexPath: NSIndexPath) -> MGSwipeButton {
+        let leftButtonText = favorited ? "Unfavorite" : "Favorite"
+        return MGSwipeButton(title: leftButtonText, backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
+            self.movies[indexPath.row].favorited =  !favorited
+            let movie = self.movies[indexPath.row]
+            switch movie.favorited {
+            case true:
+                RealmHelper.setFavorited(movie.id)
+                self.fireBaseFavoriteIds.append(movie.id)
+                
+            case false:
+                if let index = self.fireBaseFavoriteIds.indexOf(movie.id) {
+                    self.fireBaseFavoriteIds.removeAtIndex(index)
+                } else {
+                    self.fireBaseFavoriteIds.append(movie.id)
+                }
+                RealmHelper.setUnfavorited(movie.id)
+
+            }
+            
+            self.tableView.reloadRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            
+            let deviceRef = self.fireBaseRef.childByAppendingPath(UIDevice.currentDevice().identifierForVendor!.UUIDString)
+            let favoritesRef = deviceRef.childByAppendingPath("favorites")
+            favoritesRef.setValue(self.fireBaseFavoriteIds)
+            
+            return true
+        }
+    }
+    
+    func getButtonShare(sharingText: String) -> MGSwipeButton {
+        return MGSwipeButton(title: "Share", backgroundColor: UIColor.blackColor()) { (cell) -> Bool in
+            let actionSheet = UIAlertController(title: "", message: "Share", preferredStyle:.ActionSheet)
+            
+            let tweetAction = UIAlertAction(title: "Share on Twitter", style: .Default, handler: { (action) in
+                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeTwitter) else {
+                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Twitter", preferredStyle: .Alert)
+                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertViewController, animated: true, completion: nil)
+                    return
+                }
+                let twitterComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+                twitterComposeViewController.setInitialText(sharingText)
+            })
+            
+            let facebookAction = UIAlertAction(title: "Share on Facebook", style: .Default, handler: { (action) in
+                guard SLComposeViewController.isAvailableForServiceType(SLServiceTypeFacebook) else {
+                    let alertViewController = UIAlertController(title: "Error", message: "You are not logged in to Facebook", preferredStyle: .Alert)
+                    alertViewController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default,handler: nil))
+                    self.presentViewController(alertViewController, animated: true, completion: nil)
+                    return
+                }
+                let facebookComposeViewController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+                facebookComposeViewController.setInitialText(sharingText)
+            })
+            
+            let moreAction = UIAlertAction(title: "More", style: .Default, handler: { (action) in
+                let activityViewController = UIActivityViewController(activityItems: [sharingText], applicationActivities: nil)
+                self.presentViewController(activityViewController, animated: true, completion: nil)
+            })
+            
+            let dismissAction = UIAlertAction(title: "Close", style: .Default, handler: { (action) in
+            })
+            
+            actionSheet.addAction(tweetAction)
+            actionSheet.addAction(facebookAction)
+            actionSheet.addAction(moreAction)
+            actionSheet.addAction(dismissAction)
+            
+            self.presentViewController(actionSheet, animated: true, completion: nil)
+            
+            return true
+        }
     }
 }
 
